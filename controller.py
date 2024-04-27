@@ -10,7 +10,7 @@ class Controller:
     def mainloop(self):
         while(True):
             for event in pygame.event.get():
-                if.event.type == pygame.QUIT:
+                if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
                 deck = [card, card]
