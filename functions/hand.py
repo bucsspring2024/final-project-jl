@@ -1,4 +1,4 @@
-from card import Card
+from functions.card import Card
 class Hand:
 
     def __init__(self, cards):
@@ -11,13 +11,14 @@ class Hand:
         v5 = self.hand[4].val
         valsame = []
         suitsame = []
+        self.hand_name = ""
         #creates a list of all values in hand and sorts them
         vals = [v1, v2, v3, v4, v5]
         vals.sort()
         
         #creates values for how many iterations of cards having same values or same suits
-        for i in len(self.hand):
-            for j in len(self.hand):
+        for i in range(len(self.hand)):
+            for j in range(len(self.hand)):
                 if i < j: 
                     if self.hand[i].val == self.hand[j].val:
                         valsame.append([i,j])
@@ -26,35 +27,65 @@ class Hand:
         #defines which value of same types for which hand
         if len(valsame) == 1:
             self.pair()
+            self.hand_name = "Pair"
         elif len(valsame) == 2:
             self.two_pair()
+            self.hand_name = "Two Pair"
         elif len(valsame) == 3:
             self.three_of_a_kind()
+            self.hand_name = "Three of A Kind"
         elif len(valsame) == 7:
             self.four_of_a_kind()
+            self.hand_name = "Four of a Kind"
         elif len(valsame) == 10 and not len(suitsame) == 10:
             self.five_of_a_kind()
+            self.hand_name = "Five of a Kind"
         elif len(suitsame) == 10 and not len(valsame) == 10:
-            self.flush()        
+            self.flush()
+            self.hand_name = "Flush"        
         elif vals == list(range(vals[0],vals[-1]+1)) or vals == [1,10,11,12,13] and not suitsame == 10:
             self.straight()
+            self.hand_name = "Straight"
         elif (vals == list(range(vals[0],vals[-1]+1)) or vals == [1,10,11,12,13]) and suitsame == 10:
-            if vals == [1,10,11,12,13]:
-                self.royal_flush()
-            else:
-                self.straight_flush()
+            self.straight_flush()
+            self.hand_name = "Straight Flush"
         elif len(suitsame) == 10 and len(valsame) == 10:
             self.flush_five()
+            self.hand_name = "Flush Five"
         elif len(valsame) == 4 and not len(suitsame) == 10:
             self.full_house()
+            self.hand_name = "Full House"
         elif len(valsame) == 4 and len(suitsame) == 10:
-            self.flush_house()                                  
+            self.flush_house()     
+            self.hand_name = "Flush House"                             
         else:
             self.high_card()
-        
+            self.hand_name = "High Card"
+    
+    def name(self):
+        return self.hand_name
+    
+    def chips_count(self):
+        return self.chips
+    
+    def mult_count(self):
+        return self.mult
+
+    def order(self):
+            print(len(self.hand))
+            order = ""
+            for i in range(len(self.hand)):
+                    order += str(Card.name(self.hand[i])) + " of " + str(Card.suit_count(self.hand[i])) + ", Chips: " + str(Card.chips_count(self.hand[i])) + ", Mult: " + str(Card.mult_count(self.hand[i])) + "\n"
+            return order
+
+
+
     def high_card(self):
-        self.chips = 5
-        self.mult = 1   
+        high_card_chips = 5
+        self.chips = high_card_chips
+        high_card_mult = 1
+        self.mult = high_card_mult
+   
     
     def pair(self):
         self.chips = 10 
