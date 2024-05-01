@@ -1,5 +1,5 @@
-from functions.card import Card
-from functions.planet import Planet
+from src.card import Card
+from src.planet import Planet
 class Math:
     def __init__(self, plan_chips, plan_mult):
         self.chips = plan_chips

@@ -1,4 +1,4 @@
-from functions.card import Card
+from src.card import Card
 import random
 class Deck:
     def __init__(self):

@@ -1,4 +1,4 @@
-from functions.card import Card
+from src.card import Card
 class Hand:
 
     def __init__(self, cards):
@@ -15,13 +15,15 @@ class Hand:
         #creates a list of all values in hand and sorts them
         vals = [v1, v2, v3, v4, v5]
         vals.sort()
-        
+        self.contributing = [0,0,0,0,0]
         #creates values for how many iterations of cards having same values or same suits
         for i in range(len(self.hand)):
             for j in range(len(self.hand)):
                 if i < j: 
                     if self.hand[i].val == self.hand[j].val:
                         valsame.append([i,j])
+                        self.contributing[i] = 1
+                        self.contributing[j] = 1
                     if self.hand[i].suit == self.hand[j].suit:
                         suitsame.append([i,j])
         #defines which value of same types for which hand

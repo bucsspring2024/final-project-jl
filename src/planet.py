@@ -1,4 +1,4 @@
-from functions.hand import Hand
+from src.hand import Hand
 class Planet:
     def __init__(self, hand_name):
         self.hand = hand_name

@@ -1,7 +1,7 @@
-from functions.deck import Deck
-from functions.hand import Hand
-from functions.math import Math
-from functions.planet import Planet
+from src.deck import Deck
+from src.hand import Hand
+from src.total_math import Math
+from src.planet import Planet
 import pygame
 
 class Controller:
@@ -54,7 +54,8 @@ class Controller:
                 print(planet_name)
                 card_chips = 0
                 for i in range(len(hand.hand)):
-                    card_chips += Hand.chips_count(hand.hand[i])
+                    if hand.contributing[i]:
+                        card_chips += Hand.chips_count(hand.hand[i])
                 print(card_chips)
                 hand_chips = hand.chips_count() + card_chips
                 print(hand_chips)
