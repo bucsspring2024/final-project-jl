@@ -1,19 +1,21 @@
 from src.card import Card
 from src.planet import Planet
-class Math:
+class Total_Math:
     def __init__(self, plan_chips, plan_mult):
-        self.chips = plan_chips
-        self.mult = plan_mult
+        self.chips = 0
+        self.mult = 0
+        self.chips += plan_chips
+        self.mult += plan_mult
         
 
-    def add_cards(self, card_chips, card_mult):
-        self.chips += Card.chips_count(card_chips)
-        self.mult += Card.mult_count(card_mult)
+    def add_cards(self, hand_chips, hand_mult):
+        self.chips += hand_chips
+        self.mult += hand_mult
 
         
     def add_jokers(self, joker_chips, joker_mult):
-        self.total_chips += joker_chips
-        self.total_mult += joker_mult
+        self.chips += joker_chips
+        self.mult += joker_mult
 
     def total(self):
-        return "Total: " + str(self.chips * self.mult)
+        return self.chips * self.mult

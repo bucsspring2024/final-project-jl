@@ -9,17 +9,16 @@ class Deck:
         self.cards = []
         self.left = 0
         self.top = 0
-        self.img = pygame.Rect(self.left, self.top, self.field_wid/3, self.field_height - 20)
+        
 
         #Making deck full of 52 cards, with 13 cards of each suit
         for i in range(1,14):
             for j in range(1,5):
+                self.img = pygame.Rect(self.left, self.top, self.field_wid/3, self.field_height - 20)
                 self.cards.append(Card(j, i, self.img, None))
 
-    def placement(self, left, top):
-        self.left = left
-        self.top = top
-        self.img = pygame.Rect(self.left, self.top, self.field_wid/3, self.field_height - 20)
+    def print_img(self):
+        return self.img
 
     def pull_card(self, place):
         return self.cards[place]

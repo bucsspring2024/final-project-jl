@@ -52,8 +52,16 @@ Money - Total money owned, and increased by each stage with varying amounts per 
 
 ## ATP
 
-| Step                 |Procedure             |Expected Results                   |
-|----------------------|:--------------------:|----------------------------------:|
-|  1                   | Run Counter Program  |GUI window appears with count = 0  |
-|  2                   | click count button   | display changes to count = 1      |
-etc...
+| Step                 |Procedure             |Expected Results                                   |
+|----------------------|:--------------------:|--------------------------------------------------:|
+|  1                   | Run Start screen     | White display appears with red text               |
+|  2                   | Click Interaction    | Play screen appears after clicking                |
+|  3                   | Cards appear         | 8 cards should appear on bottom of screen         |
+|  4                   | Card clicked         | When a card is clicked moves to middle            |
+|  5                   | Hand chosen          | When 5 cards clicked locks them                   |
+|  6                   | Chips calculated     | Chips for hand is found, shown on left            |
+|  7                   | Round compelete      | Upon reaching chip goal, shop opens               |
+|  8                   | Shop phase           | Player can buy jokers or packs from shop          |
+|  9                   | Next round           | Player can click left box to move on              |
+|  10                  | Game over            | Player fails if cannot reach chip goal in 5 rounds|
+
