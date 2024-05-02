@@ -11,7 +11,6 @@ class Math:
         self.mult += Card.mult_count(card_mult)
 
         
-    
     def add_jokers(self, joker_chips, joker_mult):
         self.total_chips += joker_chips
         self.total_mult += joker_mult

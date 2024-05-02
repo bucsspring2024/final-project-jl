@@ -1,9 +1,13 @@
+import random
+import pygame
 class Card:
-    def __init__(self, suit, val, buff = None):
+    def __init__(self, suit, val, image, buff = None):
         self.val = val
         self.buff = buff
         self.mult = 0
         self.name_current = ""
+        self.card_array = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"]
+        self.img = image
         #Defining suits of cards
         if suit == 1:
             self.suit = "Spades"
@@ -29,7 +33,9 @@ class Card:
             if self.val == 13:
                 self.name_current = "King"
     
-        
+    def rand_card(self):
+        rand = random.randint(0, 11)
+        return self.card_array[rand]
             
     def chips_count(self):
         return self.chips

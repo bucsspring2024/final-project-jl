@@ -2,6 +2,9 @@ from src.deck import Deck
 from src.hand import Hand
 from src.total_math import Math
 from src.planet import Planet
+from src.pack import Pack
+from src.tarot import Tarot
+from src.shop import Shop
 import pygame
 
 class Controller:
@@ -9,77 +12,98 @@ class Controller:
         """
         docstring
         """
-        screen = pygame.display.set_mode()
-        screen.fill("white")
-        self.mainloop(screen)
+        self.screen = pygame.display.set_mode()
+        self.width, self.height = pygame.display.get_window_size()
+        self.screen.fill("white")
 
-    def mainloop(self):
+    def mainloop(self, screen, width, height):
         while(True):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
+                self.field_wid = int(width/4)
+                self.field_height = int(height/4)
+                self.field_rect = pygame.Rect(int(width - (width/5)), 0, int(self.field_wid), int(self.field_height))
 
-                self.deck = Deck()
+                self.deck = Deck(self.field_wid, self.field_height)
+                self.draw = 8
+                self.money = 0 
+                self.joker_money = 0
+                self.field_array = []
+                self.current_hand = []
+                self.hand_field = []
+                self.chips_to_win = 0
+                self.current_chips = 0
+                self.chosen_hand = []
+
+
+                self.open_game()
                 
-        #Test 1: Description: Creating a Deck
-        #Steps: Call the order function of the deck to print the total cards in the deck and a string of each card's name, suit, chips and mult.
-        #Expected Outcome: 52, *Name* of *Suit*, Chips: *chips*, Mult: *mult*, from Ace to King, Spades,Clubs,Hearts,Diamonds, Chips from 11->2->13, Mult always 0
-                print("Test 1:")                
-                print(self.deck.order()) 
-    
+                self.round_start()
+                self.play_loop()
 
-        #Test 2: Description: Shuffling Deck
-        #Steps: Shuffle the deck, then call the order function again to show the deck order was changed.
-        #Expected Outcome: 52, *Name* of *Suit*, Chips: *chips*, Mult: *mult* in random order of names, with their associated suits, chips and mults(0 so doesn't matter)
-                print("Test 2:")
-                self.deck.shuffle()
-                print(self.deck.order())
+                
+                
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.position = pygame.mouse.get_pos()
+                    if self.current_hand.img.collidepoint(self.position):
+                        for i in range(self.draw):
+                            self.chosen_hand.append[i]
+                if len(self.chosen_hand) == 5:
+                    self.hand = Hand(self.chosen_hand)
 
-        #Test 3: Description: Drawing a hand from deck
-        #Steps: Creates a hand of 5 cards from the deck, taking from the top of the deck. Then uses the order function to show the same as before.
-        #Expected Outcome: 5, whatever order Test 2's first 5 cards were in
-                print("Test 3:")
-                hand_array = []
-                for i in range(5):
-                    hand_array.append(self.deck.pull_card(i)) 
-                hand = Hand(hand_array)
-                print(hand.order())
+                #self.tarot_proc()
 
-        #Test 4: Description: Producing a total from a hand
-        #Steps: Takes the hand from Test 3 and calculates the correct hand type, and then prints the name, and chips and mult associated with the hand. Includes the chips from the hand type but also the cards themselves.
-        #Expected Outcome: *number of combined chips of all cards in hand added together*,*combined chips of cards with base hand chips*, *mult of hand, should be unchanged by cards*
-                print("Test 4:")
-                planet_name = Hand.name(hand)
-                print(planet_name)
-                card_chips = 0
-                for i in range(len(hand.hand)):
-                    if hand.contributing[i]:
-                        card_chips += Hand.chips_count(hand.hand[i])
-                print(card_chips)
-                hand_chips = hand.chips_count() + card_chips
-                print(hand_chips)
-                hand_mult = hand.mult_count()
-                print(hand_mult)
-                val = Math(hand_chips, hand_mult)
-                print(val.total())
+                self.current_shop = Shop(screen, width, height, self.field_array)
 
-
-        #Test 5: Description: Buying a planet from shop and checking change in total
-        #Steps: Calls the planet function for whichever hand was played in Test 3 and found in Test 4, print to check chips/mult beforehand, then adds the chip/mult bonus from the planet card to the totals, then reprints again.
-        #Expected Outcome: *Whatever chip and mult ended Test 4*, *Those numbers plus the new planet chips and mults*
-                print("Test 5")
-                #Shop in example will have high card planet, which user will buy
-                print(hand_chips)
-                print(hand_mult)
-                planet = Planet(planet_name)
-                Planet.shop_purchase(planet, planet_name,hand)
-                hand_chips = hand.chips_count() + card_chips
-                hand_mult = hand.mult_count()
-                print(hand_chips)
-                print(hand_mult)
-
-
-        #Tests completed
-                print("Tests complete!!")
                 exit()
+
+    def round_start(self):
+        self.chips_to_win += 200
+        self.deck.shuffle()
+
+    def open_game(self):
+        starting = True
+        while starting:
+            font = pygame.font.Font(None, 48)        
+            welcome = font.render("Welcome to Jalatro", True, "Red")
+            begin = font.render("Click to begin", True, "Red")
+            self.screen.blit(begin, ((self.width/2) - 150, (self.height/2)))
+            self.screen.blit(welcome, ((self.width/2) - 200, (self.height/2) - 100))
+            pygame.display.flip()
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    starting = False
+
+    def play_loop(self):
+        playing = True
+        self.screen.fill("Purple")
+        self.field = pygame.draw.rect(self.screen, "black", self.field_rect)
+        pygame.display.flip()
+        self.deck.shuffle()
+        while playing:
+            for i in range(self.draw):
+                self.current_hand.append(self.deck.pull_card(i))
+                self.deck.top = self.height - (self.height / 4)
+                self.deck.left = (self.width/8) + ((self.width/8)*i)
+                self.deck.placement(self.deck.top, self.deck.left)
+                self.drawn_cards = pygame.draw.rect(self.screen, "brown", self.deck.pull_card(i).img)
+                pygame.display.flip()
+            if self.chips_to_win < self.current_chips:
+                playing = False
+
+
+    def tarot_proc(self):
+        while(True):
+            self.tarot_card_list = []
+            for event in pygame.event.get():  
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.position = pygame.mouse.get_pos()
+                    for i in range(self.draw):
+                        if self.current_hand[i].img.collidepoint(self.position):
+                            self.tarot_card_list.clear()
+                            self.tarot_card_list.append(self.hand[i])
+                    for i in len(self.field_array):
+                        if self.field_array[i].rect.collidepoint(self.position):
+                            Tarot.run_Tarot(self.field_array[i], self.field_array[i].name, self.tarot_card_list)

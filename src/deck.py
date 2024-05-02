@@ -1,13 +1,25 @@
 from src.card import Card
 import random
+import pygame
 class Deck:
-    def __init__(self):
+    def __init__(self, field_wid, field_height):
         #Starting a deck of empty cards
+        self.field_wid = field_wid
+        self.field_height = field_height
         self.cards = []
+        self.left = 0
+        self.top = 0
+        self.img = pygame.Rect(self.left, self.top, self.field_wid/3, self.field_height - 20)
+
         #Making deck full of 52 cards, with 13 cards of each suit
         for i in range(1,14):
             for j in range(1,5):
-                self.cards.append(Card(j, i, None))
+                self.cards.append(Card(j, i, self.img, None))
+
+    def placement(self, left, top):
+        self.left = left
+        self.top = top
+        self.img = pygame.Rect(self.left, self.top, self.field_wid/3, self.field_height - 20)
 
     def pull_card(self, place):
         return self.cards[place]
