@@ -18,6 +18,7 @@ class Controller:
 
     def mainloop(self, screen, width, height):
         self.round_number = 0
+        self.max_chips = 0
         self.draw = 8
         self.money = 0 
         self.joker_money = 0
@@ -158,6 +159,8 @@ class Controller:
                     self.val = Total_Math(self.hand.chips_count(), self.hand.mult_count())
                     self.val.add_cards(self.hand_chips, self.hand_mult)
                     self.current_chips += self.val.total()
+                    if self.val.total() < self.max_chips:
+                        self.max_chips = self.val.total()
                 if self.hand_size == 5:
                     self.cover_score = pygame.Rect(0,0,400,100)
                     pygame.draw.rect(self.screen, "purple", self.cover_score)
@@ -215,10 +218,19 @@ class Controller:
 
     def game_over(self):
         self.screen.fill("Black")
+        fileref = open("highscore.txt")
+        if int(fileref.read()) < self.max_chips:
+            fileref = open("highscore.txt", 'w')
+            fileref.write(str(self.max_chips))
+            fileref.close()
         font = pygame.font.Font(None, 100)
         game_over = font.render("Game Over", True, "Red")
         highscore = font.render("You made it to round: " + str(self.round_number), True, "Red")
+        highscore_chips = font.render("Largest amount of chips in one hand: " + str(self.max_chips), True, "Red")
+        overall_highscore = font.render("Best hand of all games: " + fileref.read(), True, "Red")
         self.screen.blit(game_over, ((self.width/2) - 150, (self.height/2)))
         self.screen.blit(highscore, ((self.width/2) - 150, (self.height/2) + 200))
+        self.screen.blit(highscore_chips, ((self.width/2) - 150, (self.height/2) + 400))
+        self.screen.blit(overall_highscore, ((self.width/2) - 150, (self.height/2) + 600))
         pygame.display.flip()
         pygame.time.wait(5000)

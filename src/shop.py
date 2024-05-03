@@ -1,5 +1,4 @@
 from src.pack import Pack
-from src.joker import Joker
 import pygame
 import random
 class Shop:
