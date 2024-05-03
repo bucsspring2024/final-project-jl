@@ -12,10 +12,6 @@ class Total_Math:
         self.chips += hand_chips
         self.mult += hand_mult
 
-        
-    def add_jokers(self, joker_chips, joker_mult):
-        self.chips += joker_chips
-        self.mult += joker_mult
 
     def total(self):
         return self.chips * self.mult

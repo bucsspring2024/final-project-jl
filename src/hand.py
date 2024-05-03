@@ -1,7 +1,30 @@
 from src.card import Card
 class Hand:
-
-    def __init__(self, cards):
+    high_card_chips = 5
+    high_card_mult = 1
+    pair_chips = 10
+    pair_mult = 2
+    two_pair_chips = 20
+    two_pair_mult = 2
+    three_of_a_kind_chips = 30
+    three_of_a_kind_mult = 3
+    straight_chips = 30
+    straight_mult = 4
+    flush_chips = 35
+    flush_mult = 4
+    full_house_chips = 40
+    full_house_mult = 4
+    four_of_a_kind_chips = 60
+    four_of_a_kind_mult = 7
+    straight_flush_chips = 100
+    straight_flush_mult = 8
+    five_of_a_kind_chips = 120
+    five_of_a_kind_mult = 12
+    flush_house_chips = 140
+    flush_house_mult = 14
+    flush_five_chips = 160
+    flush_five_mult = 16
+    def __init__(self, cards, procced_planets):
         #Defines a hand as 5 cards, note cards can be empty
         self.hand = [cards[0], cards[1], cards[2], cards[3], cards[4]]
         v1 = self.hand[0].val
@@ -28,40 +51,40 @@ class Hand:
                         suitsame.append([i,j])
         #defines which value of same types for which hand
         if len(valsame) == 1:
-            self.pair()
+            self.pair(procced_planets)
             self.hand_name = "Pair"
         elif len(valsame) == 2:
-            self.two_pair()
+            self.two_pair(procced_planets)
             self.hand_name = "Two Pair"
         elif len(valsame) == 3:
-            self.three_of_a_kind()
+            self.three_of_a_kind(procced_planets)
             self.hand_name = "Three of A Kind"
         elif len(valsame) == 7:
-            self.four_of_a_kind()
+            self.four_of_a_kind(procced_planets)
             self.hand_name = "Four of a Kind"
         elif len(valsame) == 10 and not len(suitsame) == 10:
-            self.five_of_a_kind()
+            self.five_of_a_kind(procced_planets)
             self.hand_name = "Five of a Kind"
         elif len(suitsame) == 10 and not len(valsame) == 10:
-            self.flush()
+            self.flush(procced_planets)
             self.hand_name = "Flush"        
         elif vals == list(range(vals[0],vals[-1]+1)) or vals == [1,10,11,12,13] and not suitsame == 10:
-            self.straight()
+            self.straight(procced_planets)
             self.hand_name = "Straight"
         elif (vals == list(range(vals[0],vals[-1]+1)) or vals == [1,10,11,12,13]) and suitsame == 10:
-            self.straight_flush()
+            self.straight_flush(procced_planets)
             self.hand_name = "Straight Flush"
         elif len(suitsame) == 10 and len(valsame) == 10:
-            self.flush_five()
+            self.flush_five(procced_planets)
             self.hand_name = "Flush Five"
         elif len(valsame) == 4 and not len(suitsame) == 10:
-            self.full_house()
+            self.full_house(procced_planets)
             self.hand_name = "Full House"
         elif len(valsame) == 4 and len(suitsame) == 10:
-            self.flush_house()     
+            self.flush_house(procced_planets)     
             self.hand_name = "Flush House"                             
         else:
-            self.high_card()
+            self.high_card(procced_planets)
             self.hand_name = "High Card"
     
     def name(self):
@@ -82,53 +105,63 @@ class Hand:
 
 
 
-    def high_card(self):
-        high_card_chips = 5
-        self.chips = high_card_chips
-        high_card_mult = 1
-        self.mult = high_card_mult
+    def high_card(self,procced_planets):
+        self.chips = self.high_card_chips + 10*procced_planets[0]
+        self.mult = self.high_card_mult + 1*procced_planets[0]
    
     
-    def pair(self):
-        self.chips = 10 
-        self.mult = 2 
+    def pair(self,procced_planets):
+
+        self.chips = self.pair_chips +15*procced_planets[1]
+        self.mult = self.pair_mult +1*procced_planets[1]
+
     
-    def two_pair(self):
-        self.chips = 20 
-        self.mult = 2 
+    def two_pair(self,procced_planets):
+
+        self.chips = self.two_pair_chips +20*procced_planets[2]
+        self.mult = self.two_pair_mult +1*procced_planets[2]
     
-    def three_of_a_kind(self):
-        self.chips = 30 
-        self.mult = 3 
+    def three_of_a_kind(self,procced_planets):
+
+        self.chips = self.three_of_a_kind_chips +20*procced_planets[3]
+        self.mult = self.three_of_a_kind_mult  +2*procced_planets[3]
+ 
+    def flush(self,procced_planets):
+
+        self.chips = self.flush_chips +15*procced_planets[4]
+        self.mult = self.flush_mult +2*procced_planets[4]
+    
+    def full_house(self,procced_planets):
+
+        self.chips = self.full_house_chips +25*procced_planets[5]
+        self.mult = self.full_house_mult +2*procced_planets[5]     
+
+    def straight(self,procced_planets):
+
+        self.chips = self.straight_chips  +30*procced_planets[6]
+        self.mult = self.straight_mult +2*procced_planets[6]
+
+    def four_of_a_kind(self,procced_planets):
+
+        self.chips = self.four_of_a_kind_chips +30*procced_planets[7]
+        self.mult = self.four_of_a_kind_mult  +3*procced_planets[7]
+    
+    def straight_flush(self,procced_planets):
+
+        self.chips = self.straight_flush_chips +40*procced_planets[8]
+        self.mult = self.straight_flush_mult +3**procced_planets[8]
+    
+    def five_of_a_kind(self,procced_planets):
+
+        self.chips = self.five_of_a_kind_chips +35*procced_planets[9]
+        self.mult = self.five_of_a_kind_mult +3*procced_planets[9]
         
-    def straight(self):
-        self.chips = 30 
-        self.mult = 4 
-        
-    def flush(self):
-        self.chips = 35 
-        self.mult = 4 
+    def flush_house(self,procced_planets):
+
+        self.chips = self.flush_house_chips +40*procced_planets[10]
+        self.mult = self.flush_house_mult +3*procced_planets[10]
     
-    def full_house(self):
-        self.chips = 40 
-        self.mult = 4       
-         
-    def four_of_a_kind(self):
-        self.chips = 60 
-        self.mult = 7 
-    
-    def straight_flush(self):
-        self.chips = 100 
-        self.mult = 8 
-    
-    def five_of_a_kind(self):
-        self.chips = 120 
-        self.mult = 12 
-        
-    def flush_house(self):
-        self.chips = 140 
-        self.mult = 14 
-    
-    def flush_five(self):
-        self.chips = 160 
-        self.mult = 16 
+    def flush_five(self,procced_planets):
+
+        self.chips = self.flush_five_chips +40*procced_planets[11]
+        self.mult = self.flush_five_mult +3*procced_planets[11]

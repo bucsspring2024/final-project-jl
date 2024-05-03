@@ -6,16 +6,18 @@ from src.hand import Hand
 from src.planet import Planet
 class Tarot:
     def __init__(self, field_wid, field_height):
-        self.tarot_array = ["Magician", "High Priestess", "Empress", "Emperor", "Hierophant", "Hermit", "Strength", "Hanged Man", "Temperance", "Star", "Moon", "Sun", "World"]
+
         self.rect = pygame.Rect(field_wid/3, field_height - 20)
 
-    def rand_tar(self):
+    def rand_tar():
+        tarot_array = ["Magician", "High Priestess", "Empress", "Emperor", "Hierophant", "Hermit", "Strength", "Hanged Man", "Temperance", "Star", "Moon", "Sun", "World"]
         rand = random.randint(0, 12)
-        return self.tarot_array[rand]
+        return tarot_array[rand]
     
     def shop_purchase(self, shop_card, field):
         self.tar = shop_card
         if self.tar == "Magician":
+            return "Magician"
             field.append(self.magician(self.rect))
         if self.tar == "High Priestess":
             field.append(self.high_priestess(self.rect))

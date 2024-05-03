@@ -13,10 +13,7 @@ Josh Levine
 
 ## Project Description
 
-Making a copy of the game Balatro, a poker deckbuilder roguelike. Allows the user to take a deck starting with 52 cards and play poker hands to acquire chips, based on pre-determined combinations of chips and multiplier, which can be increased by acquiring "joker" cards from the shop in between rounds. Three rounds per stage, with increasing total chip requirements as you progress. Money is acquired for each round completed. Special types of cards can be bought from the shop to increase multipliers for different types of hands, and to modify cards of the deck.
-
-I am very aware that this is already a game, I plan on remaking the game from scratch to the best of my ability.
-
+Making a copy of the game Balatro, a poker deckbuilder roguelike. Allows the user to take a deck starting with 52 cards and play poker hands to acquire chips, based on pre-determined combinations of chips and multiplier, which can be increased by acquiring tarot or planet cards from the shop in between rounds. Increasing total chip requirements as you progress. Money is acquired for each round completed. Special types of cards can be bought from the shop to increase multipliers for different types of hands, and to modify cards of the deck.
 ***    
 
 ## GUI Design
@@ -34,7 +31,7 @@ I am very aware that this is already a game, I plan on remaking the game from sc
 ### Features
 
 1. Deck of cards
-2. Shop with jokers, and modifier cards
+2. Shop with packs of planet and tarot cards
 3. Scaling difficulty rounds
 4. Money with purchasing value in the shop
 5. Values of chips and multipliers for different levels of hands
@@ -42,8 +39,8 @@ I am very aware that this is already a game, I plan on remaking the game from sc
 ### Classes
 
 Card - Different cards in deck, with internal values of 'value' and 'suit'
-Joker - Jokers with different internal values defining different abilities
-Special - Special cards bought from shop with different properties, such as removing cards from deck, changing internal values of cards in deck, or increasing Chips and Mult for a specific Hand.
+Tarot - Cards bought from the shop that appear in the top right field, can be used to affect cards in deck.
+Planet - Increase chips and mult for specific Hand, bought from shop.
 Hands - Different poker hands with internal values of 'chips' and 'mult'
 Chips - Multiplier amount to find total, based on original defined value for Hands combined with the increased value from the shop
 Mult - Multiplier amount to find total, based on original defined value for Hands combined with the increased value from the shop

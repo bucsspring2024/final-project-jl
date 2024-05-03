@@ -6,7 +6,7 @@ class Card:
         self.buff = buff
         self.mult = 0
         self.name_current = ""
-        self.card_array = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"]
+
         self.img = image
         #Defining suits of cards
         if suit == 1:
@@ -34,8 +34,13 @@ class Card:
                 self.name_current = "King"
     
     def rand_card(self):
-        rand = random.randint(0, 11)
-        return self.card_array[rand]
+        rand_val = random.randint(0, 11)
+        rand_suit = random.randint(0,3)
+        card_array = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"]
+        suit_array = ["Spades", "Clubs", "Hearts", "Diamonds"]
+        return card_array[rand_val], suit_array[rand_suit]
+        
+    
             
     def chips_count(self):
         return self.chips
@@ -50,4 +55,3 @@ class Card:
         return self.name_current
     
         #Needs section defining buffs
-    

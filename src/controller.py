@@ -24,6 +24,7 @@ class Controller:
         self.chips_to_win = 0
         self.field_array = []
         self.fail = False
+        self.procced_planets = [0,0,0,0,0,0,0,0,0,0,0,0]
         while(True):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -54,9 +55,8 @@ class Controller:
                 
                 self.money += 10
                 
-                self.current_shop = Shop(screen, width, height, self.field_array)
-
-
+                self.current_shop = Shop(screen, width, height, self.field_array, self.procced_planets, self.money)
+            
         
                 #self.tarot_proc()
 
@@ -91,6 +91,7 @@ class Controller:
         self.held_hand = []
         self.hand_size = 0
         self.attempts = 5
+        self.clicked_rects = []
         while playing:
                 
                 self.rect_list = []
@@ -118,6 +119,7 @@ class Controller:
                     self.suit = font.render(str(self.hand_array[-1].suit), True, self.suit_col)
                     self.screen.blit(self.value, (self.hand_array[-1].img))
                     self.screen.blit(self.suit, (self.hand_array[-1].img.left,self.hand_array[-1].img.top + 50))
+
                     pygame.display.flip()
                 for event in pygame.event.get():
                     if event.type == pygame.MOUSEBUTTONDOWN:
@@ -125,7 +127,7 @@ class Controller:
                         print("rect_list" + str(self.rect_list))
                         print("held hand" + str(self.held_hand))
                         for i in range(len(self.rect_list)):
-                            if self.rect_list[i].collidepoint(self.position):
+                            if self.rect_list[i].collidepoint(self.position) and self.rect_list[i] not in self.clicked_rects:
                                 self.drawn_cards[i].img.top -= self.height / 2
                                 self.held_hand.append(self.drawn_cards[i])
                                 self.hand_size += 1
@@ -141,12 +143,13 @@ class Controller:
                                 self.suit = font.render(str(self.held_hand[-1].suit), True, self.suit_col)
                                 self.screen.blit(self.value, (self.held_hand[-1].img))
                                 self.screen.blit(self.suit, (self.held_hand[-1].img.left,self.held_hand[-1].img.top + 50))
-                                
+                                self.clicked_rects.append(self.rect_list[i])
+
                         pygame.display.flip()
                         if self.hand_size == 5:
                             break
                 if self.hand_size == 5:
-                    self.hand = Hand(self.held_hand)
+                    self.hand = Hand(self.held_hand,self.procced_planets)
                     for i in range(len(self.hand.hand)):
                         self.card_chips += Hand.chips_count(self.hand.hand[i])
                     self.hand_chips = self.hand.chips_count() + self.card_chips
@@ -185,6 +188,7 @@ class Controller:
                     self.rect_list.clear()
                     self.held_hand.clear()
                     self.drawn_cards.clear()
+                    self.clicked_rects.clear()
                     pygame.draw.rect(self.screen, "purple", self.card_reset)
                     for q in range(8):
                         self.deck.cards.remove(self.deck.pull_card(q))
@@ -192,9 +196,8 @@ class Controller:
 
                 
 
-                if self.chips_to_win < self.current_chips:
+                if self.chips_to_win <= self.current_chips:
                     playing = False
-
 
     def tarot_proc(self):
         while(True):
