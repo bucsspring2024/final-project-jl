@@ -6,6 +6,7 @@ from src.pack import Pack
 from src.tarot import Tarot
 from src.shop import Shop
 import pygame
+import shelve
 
 class Controller:
     def __init__(self):
